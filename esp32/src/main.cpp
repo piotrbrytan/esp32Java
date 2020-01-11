@@ -25,7 +25,8 @@ void connect() {
 
   Serial.println("\nconnected!");
 
-  client.subscribe("/hello");
+  client.subscribe("/configuration");
+  client.subscribe("/state");
 }
 
 void setup() {
@@ -45,9 +46,11 @@ void loop() {
   if (!client.connected()) {
     connect();
   }
-
-  if (millis() - lastMillis > 1000) {
-    lastMillis = millis();
-    client.publish("/hello", "world");
-  }
+  
+  // pinMode(5, INPUT);
+  
+  // if (millis() - lastMillis > 1000) {
+  //   lastMillis = millis();
+  //   client.publish("/hello", (String)digitalRead(5));
+  // }
 }

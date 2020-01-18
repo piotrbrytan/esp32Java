@@ -34,4 +34,22 @@ public class Endpoints {
         publisher.publish("/configuration", new MqttMessage(msg));
         publisher.disconnect();
     }
+
+    @RequestMapping("/state")
+    public void state(@RequestParam int pin, @RequestParam String state) throws MqttException {
+        options.setAutomaticReconnect(true);
+        options.setCleanSession(true);
+        options.setConnectionTimeout(10);
+        publisher.connect(options);
+
+        String json = new JSONObject()
+                .put("pin", pin)
+                .put("state", state).toString();
+
+        byte[] msg = json.getBytes();
+
+        publisher.publish("/state", new MqttMessage(msg));
+        publisher.disconnect();
+    }
+
 }
